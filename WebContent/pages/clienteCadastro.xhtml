@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="metedata">
+		<f:metadata>
+			<f:viewParam name="cliAcao" value="#{clienteBean.acao}" />
+			<f:viewParam name="cliCode" value="#{clienteBean.codigo}" />
+			<f:event listener="#{clienteBean.carregarCadastro}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formCliCad">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Clientes" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="panelCliCad" columns="2">
+				<p:outputLabel value="Código: " />
+				<p:inputText maxlength="20" size="10" readonly="true"
+					value="#{clienteBean.clienteCadastro.nCliente}" />
+				<p:outputLabel value="Nome: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{clienteBean.clienteCadastro.nome}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				<p:outputLabel value="Data de nascimento: " />
+				<p:inputMask mask="99/99/9999" size="10"
+					value="#{clienteBean.clienteCadastro.dataNasc}"
+					readonly="#{clienteBean.acao == 'excluir'}">
+					<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy">
+						<f:validateBean />
+					</f:convertDateTime>
+				</p:inputMask>
+			</h:panelGrid>
+			<h:panelGrid columns="5">
+				<p:commandButton value="Novo" actionListener="#{clienteBean.novo}"
+					update=":formCliCad:panelCliCad"
+					rendered="#{clienteBean.acao == 'novo' or clienteBean.acao == null}" />
+				<p:commandButton value="Salvar"
+					actionListener="#{clienteBean.salvar}" update=":msgGlobal"
+					rendered="#{clienteBean.acao == 'novo' or clienteBean.acao == null}" />
+				<p:commandButton value="Excluir"
+					actionListener="#{clienteBean.excluir}" update="msgGlobal"
+					rendered="#{clienteBean.acao == 'excluir'}" />
+				<p:commandButton value="Editar"
+					actionListener="#{clienteBean.editar}" update="msgGlobal"
+					rendered="#{clienteBean.acao == 'editar'}" />
+				<p:button value="Voltar"
+					outcome="/pages/clientePesquisa.xhtml?faces-redirect=true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

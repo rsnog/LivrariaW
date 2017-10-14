@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="metedata">
+		<f:metadata>
+			<f:event listener="#{livroBean.carregarPesquisa}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputText value="Livros" />
+			</f:facet>
+		</p:toolbar>
+
+		<h:form>
+			<p:dataTable id="tblLiv"
+				emptyMessage="Nenhum registro encontrado !!!"
+				value="#{livroBean.listaLivro}"
+				filteredValue="#{livroBean.listaLivroFiltrada}" var="livro"
+				rows="10" paginator="true">
+
+				<f:facet name="footer">
+					<p:button value="Novo"
+						outcome="/pages/livroCadastro.xhtml?faces-redirect=true">
+						<f:param name="livAcao" value="novo" />
+					</p:button>
+					<h:commandLink>
+						<p:graphicImage library="img" name="excel.png" width="30" />
+						<p:dataExporter type="xls" target="tblLiv" fileName="Livros" />
+					</h:commandLink>
+					<h:commandLink>
+						<p:graphicImage library="img" name="pdf.png" width="30" />
+						<p:dataExporter type="pdf" target="tblLiv" fileName="Livros"
+							encoding="ISO-8859-1" />
+					</h:commandLink>
+				</f:facet>
+
+				<p:column headerText="Código" width="100">
+					<h:outputText value="#{livro.idLivro}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<h:outputText value="#{livro.nome}" />
+				</p:column>
+				<p:column headerText="Autor">
+					<h:outputText value="#{livro.autor}" />
+				</p:column>
+				<p:column headerText="Editora">
+					<h:outputText value="#{livro.editora}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{livro.categoria.nome}" />
+				</p:column>
+				<p:column headerText="Fornecedor">
+					<h:outputText value="#{livro.fornecedor.nome}" />
+				</p:column>
+				<p:column headerText="Qtd">
+					<h:outputText value="#{livro.quantidade}" />
+				</p:column>
+				<p:column headerText="Preço">
+					<h:outputText value="R$#{livro.valor}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Opções" exportable="false">
+					<p:button value="Excluir"
+						outcome="/pages/livroCadastro.xhtml?faces-redirect=true">
+						<f:param name="livCode" value="#{livro.idLivro}" />
+						<f:param name="livAcao" value="excluir" />
+					</p:button>
+					<p:button value="Editar"
+						outcome="/pages/livroCadastro.xhtml?faces-redirect=true">
+						<f:param name="livCode" value="#{livro.idLivro}" />
+						<f:param name="livAcao" value="editar" />
+					</p:button>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

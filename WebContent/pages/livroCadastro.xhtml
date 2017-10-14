@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="metedata">
+		<f:metadata>
+			<f:viewParam name="livAcao" value="#{livroBean.acao}" />
+			<f:viewParam name="livCode" value="#{livroBean.codigo}" />
+			<f:event listener="#{livroBean.carregarCadastro}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formLivCad">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Livros" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="panelLivCad" columns="2">
+				<p:outputLabel value="Código: " />
+				<p:inputText maxlength="20" size="10" readonly="true"
+					value="#{livroBean.livroCadastro.idLivro}" />
+				<p:outputLabel value="Nome: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{livroBean.livroCadastro.nome}"
+					readonly="#{livroBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				<p:outputLabel value="Autor: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{livroBean.livroCadastro.autor}"
+					readonly="#{livroBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				<p:outputLabel value="Editora: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{livroBean.livroCadastro.editora}"
+					readonly="#{livroBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				<p:outputLabel value="Categoria: " />
+				<p:selectOneMenu value="#{livroBean.livroCadastro.categoria}"
+					disable="#{livroBean.acao == 'excluir'}"
+					converter="categoriaConverter">
+					<f:selectItem itemLabel="Selecione uma categoria" itemValue="" />
+					<f:selectItems value="#{livroBean.listaCategoria}" var="categoria"
+						itemValue="#{categoria}" itemLabel="#{categoria.nome}" />
+					<f:validateBean />
+				</p:selectOneMenu>
+				<p:outputLabel value="Fornecedor: " />
+				<p:selectOneMenu value="#{livroBean.livroCadastro.fornecedor}"
+					disable="#{livroBean.acao == 'excluir'}"
+					converter="fornecedorConverter">
+					<f:selectItem itemLabel="Selecione um fornecedor" itemValue="" />
+					<f:selectItems value="#{livroBean.listaFornecedor}"
+						var="fornecedor" itemValue="#{fornecedor}"
+						itemLabel="#{fornecedor.nome}" />
+					<f:validateBean />
+				</p:selectOneMenu>
+				<p:outputLabel value="Quantidade: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{livroBean.livroCadastro.quantidade}"
+					readonly="#{livroBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+				<p:outputLabel value="Valor: " />
+				<p:inputText maxlength="20" size="10"
+					value="R$#{livroBean.livroCadastro.valor}"
+					readonly="#{livroBean.acao == 'excluir'}">
+					<f:convertNumber pattern="0.00" />
+					<f:validateBean />
+				</p:inputText>
+			</h:panelGrid>
+			<h:panelGrid columns="5">
+				<p:commandButton value="Novo" actionListener="#{livroBean.novo}"
+					update=":formLivCad:panelLivCad"
+					rendered="#{livroBean.acao == 'novo' or livroBean.acao == null}" />
+				<p:commandButton value="Salvar" actionListener="#{livroBean.salvar}"
+					update=":msgGlobal"
+					rendered="#{livroBean.acao == 'novo' or livroBean.acao == null}" />
+				<p:commandButton value="Excluir"
+					actionListener="#{livroBean.excluir}" update="msgGlobal"
+					rendered="#{livroBean.acao == 'excluir'}" />
+				<p:commandButton value="Editar" actionListener="#{livroBean.editar}"
+					update="msgGlobal" rendered="#{livroBean.acao == 'editar'}" />
+				<p:button value="Voltar"
+					outcome="/pages/livroPesquisa.xhtml?faces-redirect=true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+
+	<ui:define name="metedata">
+		<f:metadata>
+			<f:event listener="#{vendaBean.carregarProduto}" type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputText value="Vendas" />
+			</f:facet>
+		</p:toolbar>
+
+		<h:form id="formVendaProd">
+			<p:dataTable emptyMessage="Nenhum registro encontrado !!!"
+				value="#{vendaBean.listaProduto}"
+				filteredValue="#{vendaBean.listaProdutoFiltrada}" var="produto"
+				rows="3" paginator="true">
+				<p:column headerText="Código" width="100">
+					<h:outputText value="#{produto.idProduto}" />
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{produto.nome}"
+					sortBy="#{produto.nome}">
+					<h:outputText value="#{produto.nome}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{produto.categoria.nome}" />
+				</p:column>
+				<p:column headerText="Fornecedor">
+					<h:outputText value="#{produto.fornecedor.nome}" />
+				</p:column>
+				<p:column headerText="Qtd">
+					<h:outputText value="#{produto.quantidade}" />
+				</p:column>
+				<p:column headerText="Preço">
+					<h:outputText value="R$" />
+					<h:outputText value="#{produto.valor}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Opções">
+					<p:commandButton value="Adicionar"
+						actionListener="#{vendaBean.adicionar(produto)}"
+						update=":formVendaCad:tblItem">
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<h:form id="formVendaCad">
+			<p:dataTable id="tblItem"
+				emptyMessage="Nenhum registro encontrado !!!"
+				value="#{vendaBean.listaItem}" var="itemVenda" rows="3"
+				paginator="true">
+				<p:column headerText="Nome">
+					<h:outputText value="#{itemVenda.produto.nome}" />
+				</p:column>
+				<p:column headerText="Categoria">
+					<h:outputText value="#{itemVenda.produto.categoria.nome}" />
+				</p:column>
+				<p:column headerText="Fornecedor">
+					<h:outputText value="#{itemVenda.produto.fornecedor.nome}" />
+				</p:column>
+				<p:column headerText="Qtd"
+					footerText="Total: #{vendaBean.vendaCadastro.quantidadeTotal}">
+					<h:outputText value="#{itemVenda.quantidade}" />
+				</p:column>
+				<p:column headerText="Preço">
+					<h:outputText value="R$" />
+					<h:outputText value="#{itemVenda.total}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+					<f:facet name="footer">
+						<h:outputText value="Total: R$" />
+						<h:outputText value="#{vendaBean.vendaCadastro.total}">
+							<f:convertNumber pattern="0.00" />
+						</h:outputText>
+					</f:facet>
+				</p:column>
+				<p:column headerText="Opções">
+					<p:commandButton value="Remover"
+						actionListener="#{vendaBean.remover(itemVenda)}"
+						update=":formVendaCad:tblItem" />
+				</p:column>
+				<f:facet name="footer">
+					<p:commandButton value="Finalizar Venda"
+						actionListener="#{vendaBean.carregarDadosVenda}"
+						oncomplete="PF('widDiagFinVenda').show();"
+						update=":formFinVenda:panelFinVenda" />
+					<p:commandButton value="Limpar"
+						actionListener="#{vendaBean.limparVenda}"
+						update=":msgGlobal :formVendaCad:tblItem" />
+				</f:facet>
+			</p:dataTable>
+		</h:form>
+		<p:dialog closable="true" draggable="true" resizable="false"
+			modal="true" header="Dados da Venda" widgetVar="widDiagFinVenda"
+			appendTo="@(body)">
+			<h:form id="formFinVenda">
+				<h:panelGrid id="panelFinVenda" columns="2">
+					<h:outputText value="Horário: " />
+					<h:outputText value="#{vendaBean.vendaCadastro.horario}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="pt_BR"
+							timeZone="America/Sao Paulo" />
+					</h:outputText>
+					<h:outputText value="Funcionário: " />
+					<h:outputText value="#{vendaBean.vendaCadastro.funcionario.nome}" />
+					<h:outputText value="Valor Total: " />
+					<h:outputText value="R$#{vendaBean.vendaCadastro.total}" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:commandButton value="Salvar"
+						actionListener="#{vendaBean.salvar}"
+						update=":msgGlobal :formVendaCad:tblItem"
+						oncomplete="PF('widDiagFinVenda').hide();" />
+					<h:commandButton value="Voltar"
+						onclick="PF('widDiagFinVenda').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
+</html>

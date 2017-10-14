@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+.ui-widget, .ui-widget, .ui-widget {
+	font-size: 97% !important;
+}
+
+body {
+	color: #333399;
+	font-size: 14px;
+	background-color: Azure;
+}
+
+#corpo {
+	width: 760px;
+	margin-top: 5px;
+	margin-right: auto;
+	margin-bottom: 5px;
+	margin-left: auto;
+	border: 15px groove #FFFF00;
+	padding: 0px;
+}
+
+#header {
+	margin: 0px;
+	border: medium dotted #FF3300;
+	height: 80px;
+	width: 760px;
+}
+
+#ld {
+	border: medium dotted #33CC99;
+	width: 190px;
+	float: left;
+}
+
+#cont {
+	border: medium dotted #1A50B8;
+	float: right;
+	width: 550px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer {
+	border: thin dotted #9966FF;
+	clear: both;
+	margin-top: 0px;
+	margin-right: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
+	padding-top: 3px;
+	padding-right: 0px;
+	padding-bottom: 3px;
+	padding-left: 0px;
+}

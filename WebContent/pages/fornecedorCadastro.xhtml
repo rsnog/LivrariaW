@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="metedata">
+		<f:metadata>
+			<f:viewParam name="forAcao" value="#{fornecedorBean.acao}" />
+			<f:viewParam name="forCode" value="#{fornecedorBean.codigo}" />
+			<f:event listener="#{fornecedorBean.carregarCadastro}"
+				type="preRenderView" />
+		</f:metadata>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formForCad">
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Fornecedores" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid id="panelForCad" columns="2">
+				<p:outputLabel value="Código: " />
+				<p:inputText maxlength="20" size="10" readonly="true"
+					value="#{fornecedorBean.fornecedorCadastro.idFornecedor}" />
+				<p:outputLabel value="Nome: " />
+				<p:inputText maxlength="20" size="10"
+					value="#{fornecedorBean.fornecedorCadastro.nome}"
+					readonly="#{fornecedorBean.acao == 'excluir'}">
+					<f:validateBean />
+				</p:inputText>
+			</h:panelGrid>
+			<h:panelGrid columns="5">
+				<p:commandButton value="Novo"
+					actionListener="#{fornecedorBean.novo}"
+					update=":formForCad:panelForCad"
+					rendered="#{fornecedorBean.acao == 'novo' or fornecedorBean.acao == null}" />
+				<p:commandButton value="Salvar"
+					actionListener="#{fornecedorBean.salvar}" update=":msgGlobal"
+					rendered="#{fornecedorBean.acao == 'novo' or fornecedorBean.acao == null}" />
+				<p:commandButton value="Excluir"
+					actionListener="#{fornecedorBean.excluir}" update="msgGlobal"
+					rendered="#{fornecedorBean.acao == 'excluir'}" />
+				<p:commandButton value="Editar"
+					actionListener="#{fornecedorBean.editar}" update="msgGlobal"
+					rendered="#{fornecedorBean.acao == 'editar'}" />
+				<p:button value="Voltar"
+					outcome="/pages/fornecedorPesquisa.xhtml?faces-redirect=true" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
