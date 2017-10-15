@@ -4,17 +4,73 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 <ui:composition template="/templates/template.xhtml">
-
 	<ui:define name="conteudo">
-		<h:form>
-			<h:outputText value="#{clienteBean.codigo}" />
-			<br />
-			<h:commandButton value="Voltar" action="/pages/index.xhtml" />
-		</h:form>
-	</ui:define>
 
+		<b:container fluid="true">
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row>
+				<b:column col-sm="3" offset="1">
+					<b:image span="8" name="logo" value="/resources/img/logo.png"
+						height="100" />
+				</b:column>
+				<b:column col-sm="3" span="8">
+					<h2>Livraria ArKeRo</h2>
+					<p>Desenvolvida como parte da disciplina de "Programação
+						Orientada a Objeto" da Faculdade de Jaguariúna</p>
+				</b:column>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row col-sm="8" offset="8">
+				<h2></h2>
+			</b:row>
+			<b:row>
+				<b:column col-sm="2" offset="8" span="4">
+					<p>“Entendo por razão, não a faculdade de raciocinar, que pode
+						ser bem ou mal utilizada, mas o encadeamento das verdades que só
+						podem produzir verdades, e uma verdade não pode ser contrária a
+						outra.”</p>
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column col-sm="3" offset="9">
+					<b:image span="3" name="logo" value="/resources/img/air.jpg"
+						width="60" />
+					<h4>~ Gottfried Leibniz</h4>
+				</b:column>
+			</b:row>
+		</b:container>
+
+	</ui:define>
 </ui:composition>
 </html>
