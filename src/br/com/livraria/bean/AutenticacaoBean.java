@@ -56,6 +56,6 @@ public class AutenticacaoBean {
 	public void redir() throws IOException {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		externalContext.redirect(
-				"https://www.youtube.com/playlist?list=PL_GwGUsBlNydMdSOh8nYYRwD4tvPX1EIV?faces-redirect=true");
+				"https://www.youtube.com/playlist?list=PL_GwGUsBlNydMdSOh8nYYRwD4tvPX1EIV");
 	}
 }
