@@ -8,4 +8,5 @@
 		<phase-listener>br.com.livraria.util.AutenticacaoPhaseListener</phase-listener>
 	</lifecycle>
 
+
 </faces-config>

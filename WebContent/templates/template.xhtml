@@ -40,7 +40,7 @@
 							<p:menuitem value="Principal" outcome="/pages/principal.xhtml"
 								rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}" />
 							<p:menuitem value="Aulas de referência"
-								url="https://www.youtube.com/playlist?list=PL_GwGUsBlNydMdSOh8nYYRwD4tvPX1EIV"
+								actionListener="#{autenticacaoBean.redir}"
 								ajax="false" target="_blank" />
 							<p:menuitem value="Sair" action="#{autenticacaoBean.sair}"
 								update=" :msgGlobal :formMenuPrincipal:panelMenuPrincipal"

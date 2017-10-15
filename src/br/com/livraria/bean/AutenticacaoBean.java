@@ -1,7 +1,11 @@
 package br.com.livraria.bean;
 
+import java.io.IOException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -49,11 +53,9 @@ public class AutenticacaoBean {
 		return "/pages/index.xhtml?faces-redirect=true";
 	}
 
-	public String verificar() {
-		if (funcionarioLogado == null) {
-			FacesUtil.addMsgErro("Login encerrado! ");
-			return "/pages/index.xhtml?faces-redirect=true";
-		}
-		return null;
+	public void redir() throws IOException {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		externalContext.redirect(
+				"https://www.youtube.com/playlist?list=PL_GwGUsBlNydMdSOh8nYYRwD4tvPX1EIV?faces-redirect=true");
 	}
 }
