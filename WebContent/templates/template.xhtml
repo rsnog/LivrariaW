@@ -40,8 +40,11 @@
 							<p:menuitem value="Principal" outcome="/pages/principal.xhtml"
 								rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}" />
 							<p:menuitem value="Aulas de referência"
-								actionListener="#{autenticacaoBean.redir}"
-								ajax="false" target="_blank" />
+								actionListener="#{autenticacaoBean.redir}" ajax="false"
+								target="_blank" />
+							<p:menuitem value="Código Fonte"
+								actionListener="#{autenticacaoBean.redir2}" ajax="false"
+								target="_blank" />
 							<p:menuitem value="Sair" action="#{autenticacaoBean.sair}"
 								update=" :msgGlobal :formMenuPrincipal:panelMenuPrincipal"
 								rendered="#{autenticacaoBean.funcionarioLogado.funcao != null}" />

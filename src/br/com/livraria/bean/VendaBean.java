@@ -4,11 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
 import br.com.livraria.dao.FuncionarioDAO;
 import br.com.livraria.dao.ItemVendaDAO;
 import br.com.livraria.dao.ProdutoDAO;
