@@ -10,17 +10,41 @@
 
 	<ui:define name="metedata">
 		<f:metadata>
-			<!-- 			<f:event listener="#{vendaBean.carregarPesquisa}" -->
+			<f:event listener="#{vendaBean.carregarPesquisa}"
 				type="preRenderView" />
 		</f:metadata>
 	</ui:define>
 
 	<ui:define name="conteudo">
-		<p:panelGrid columns="3">
-			<h:form>
-				<p:outputPanel>Pesquisa Vendas</p:outputPanel>
-			</h:form>
-		</p:panelGrid>
+		<p:toolbar>
+			<f:facet name="left">
+				<h:outputText value="Vendas" />
+			</f:facet>
+		</p:toolbar>
+
+		<h:form>
+			<p:dataTable id="tblPro"
+				emptyMessage="Nenhum registro encontrado !!!"
+				value="#{vendaBean.listaVenda}"
+				filteredValue="#{vendaBean.listaVendaFiltrada}" var="venda"
+				rows="10" paginator="true">
+				<p:column headerText="Código" width="100">
+					<h:outputText value="#{venda.idVenda}" />
+				</p:column>
+				<p:column headerText="Data" 
+					sortBy="#{venda.horario}">
+					<h:outputText value="#{venda.horario}" />
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="R$#{venda.total}">
+						<f:convertNumber pattern="0.00" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Funcionário" width="100" filterBy="#{venda.funcionario.nome}">
+					<h:outputText value="#{venda.funcionario.nome}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 
 	</ui:define>
 

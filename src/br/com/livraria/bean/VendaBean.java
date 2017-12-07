@@ -22,6 +22,8 @@ import br.com.livraria.util.FacesUtil;
 @ManagedBean
 @ViewScoped
 public class VendaBean {
+	private List<Venda> listaVenda;
+	private List<Venda> listaVendaFiltrada;
 	private List<Produto> listaProduto;
 	private List<Produto> listaProdutoFiltrada;
 	private List<Categoria> listaCategoria;
@@ -30,6 +32,22 @@ public class VendaBean {
 	private Venda vendaCadastro;
 	@ManagedProperty(value = "#{autenticacaoBean}")
 	private AutenticacaoBean autenticacaoBean;
+
+	public List<Venda> getListaVenda() {
+		return listaVenda;
+	}
+
+	public void setListaVenda(List<Venda> listaVenda) {
+		this.listaVenda = listaVenda;
+	}
+
+	public List<Venda> getListaVendaFiltrada() {
+		return listaVendaFiltrada;
+	}
+
+	public void setListaVendaFiltrada(List<Venda> listaVendaFiltrada) {
+		this.listaVendaFiltrada = listaVendaFiltrada;
+	}
 
 	public List<Produto> getListaProduto() {
 		return listaProduto;
@@ -152,6 +170,15 @@ public class VendaBean {
 		FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 		Funcionario funcionario = funcionarioDAO.buscarCodigo(autenticacaoBean.getFuncionarioLogado().getnRegistro());
 		vendaCadastro.setFuncionario(funcionario);
+	}
+	
+	public void carregarPesquisa() {
+		try {
+			VendaDAO vendaDAO = new VendaDAO();
+			listaVenda = vendaDAO.listar();
+		} catch (Exception e) {
+			FacesUtil.addMsgErro("Ocorreu um erro na pesquisa! " + e.getMessage());
+		}
 	}
 
 	public void salvar() {
